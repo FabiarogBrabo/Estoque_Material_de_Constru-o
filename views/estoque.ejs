@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestão de Estoque</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="app-body">
+    <header class="app-header">
+        <h1>Gestão de Estoque</h1>
+        <div class="user-info">
+            <span><%= usuario.nome %></span>
+            <a href="/logout" class="btn btn-danger">Logout</a>
+        </div>
+    </header>
+
+    <nav class="breadcrumb">
+        <a href="/app/principal">Início</a> &gt; Estoque
+    </nav>
+
+    <main class="container">
+        
+        <% if (error) { %>
+            <div class="alert error-alert"><%= error %></div>
+        <% } %>
+        <% if (success) { %>
+            <div class="alert <%= success.startsWith('ALERTA') ? 'warning-alert' : 'success-alert' %>">
+                <%= success %>
+            </div>
+        <% } %>
+
+        <div class="estoque-grid">
+            <div class="card">
+                <h3>Registrar Movimentação</h3>
+                <form action="/estoque/movimentar" method="POST">
+                    
+                    <div class="input-group">
+                        <label for="produto_id">Produto</label>
+                        <select id="produto_id" name="produto_id" required>
+                            <option value="">Selecione um produto...</option>
+                            <% produtos.forEach(produto => { %>
+                                <option value="<%= produto.id %>">
+                                    <%= produto.nome %> (Atual: <%= produto.estoque_atual %>)
+                                </option>
+                            <% }); %>
+                        </select>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>Tipo de Movimentação</label>
+                        <div class="radio-group">
+                            <input type="radio" id="entrada" name="tipo" value="entrada" required>
+                            <label for="entrada">Entrada</label>
+                            <input type="radio" id="saida" name="tipo" value="saida" required>
+                            <label for="saida">Saída</label>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="quantidade">Quantidade</label>
+                        <input type="number" id="quantidade" name="quantidade" min="1" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="data_movimentacao">Data/Hora da Movimentação</label>
+                        <input type="datetime-local" id="data_movimentacao" name="data_movimentacao" required>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Registrar</button>
+                </form>
+            </div>
+
+            <div class="card span-2">
+                <h3>Níveis de Estoque Atuais</h3>
+                <div class="table-container-small">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Produto</th>
+                                <th>Estoque Atual</th>
+                                <th>Estoque Mínimo</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% produtos.forEach(produto => { %>
+                                <tr class="<%= produto.estoque_atual < produto.estoque_minimo ? 'estoque-baixo' : '' %>">
+                                    <td><%= produto.nome %></td>
+                                    <td><%= produto.estoque_atual %></td>
+                                    <td><%= produto.estoque_minimo %></td>
+                                    <td>
+                                        <% if (produto.estoque_atual < produto.estoque_minimo) { %>
+                                            <span class="status-baixo">Baixo</span>
+                                        <% } else { %>
+                                            <span class="status-ok">OK</span>
+                                        <% } %>
+                                    </td>
+                                </tr>
+                            <% }); %>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+</body>
+</html>

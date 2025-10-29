@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Gestão de Estoque</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="login-body">
+    <div class="login-container">
+        <form action="/login" method="POST">
+            <h2>Gestão de Estoque</h2>
+            <p>Acesso ao Almoxarifado</p>
+
+            <% if (error) { %>
+                <div class="alert error-alert"><%= error %></div> <% } %>
+
+            <div class="input-group">
+                <label for="login">Login</label>
+                <input type="text" id="login" name="login" required>
+            </div>
+            <div class="input-group">
+                <label for="senha">Senha</label>
+                <input type="password" id="senha" name="senha" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Entrar</button>
+        </form>
+    </div>
+</body>
+</html>

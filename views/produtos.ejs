@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Produtos</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="app-body">
+    <header class="app-header">
+        <h1>Cadastro de Produtos</h1>
+        <div class="user-info">
+            <span><%= usuario.nome %></span>
+            <a href="/logout" class="btn btn-danger">Logout</a>
+        </div>
+    </header>
+
+    <nav class="breadcrumb">
+        <a href="/app/principal">Início</a> &gt; Produtos
+    </nav>
+
+    <main class="container">
+        
+        <% if (error) { %>
+            <div class="alert error-alert"><%= error %></div>
+        <% } %>
+        <% if (success) { %>
+            <div class="alert success-alert"><%= success %></div>
+        <% } %>
+
+        <button id="btnNovoProduto" class="btn btn-primary" style="margin-bottom: 20px;">
+            <i class="icon icon-add"></i> Novo Produto
+        </button>
+
+        <div class="input-group">
+            <label for="buscaProduto">Buscar Produto:</label>
+            <input type="text" id="buscaProduto" placeholder="Digite o nome do produto...">
+        </div>
+
+        <div class="table-container">
+            <table id="tabelaProdutos">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nome</th>
+                        <th>Descrição</th>
+                        <th>Est. Mínimo</th>
+                        <th>Est. Atual</th>
+                        <th>Un. Medida</th>
+                        <th>Validade</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                ```
+
+Faça essas substituições. Se os erros que você está vendo forem **diferentes** disso (por exemplo, mensagens de erro no terminal), por favor, **copie e cole a mensagem de erro completa** aqui para que eu possa analisar!
