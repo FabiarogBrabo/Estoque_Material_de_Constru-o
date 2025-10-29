@@ -19,11 +19,11 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("data_validade").value = "";
             
             modal.style.display = "block";
-            modal.style.opacity = 1;
+            modal.style.opacity = 1; // Ativa a animação de fade-in
         };
     }
     
-    // --- Lógica de Busca/Filtro na Tabela de Produtos  ---
+    // --- Lógica de Busca/Filtro na Tabela de Produtos ---
     const inputBusca = document.getElementById("buscaProduto");
     const tabelaProdutos = document.getElementById("tabelaProdutos");
     
@@ -56,10 +56,10 @@ function fecharModal() {
     // Adiciona um pequeno delay para a animação de fade-out
     setTimeout(() => {
         modal.style.display = "none";
-    }, 400);
+    }, 400); // O tempo deve ser o mesmo da transição no CSS
 }
 
-// Abrir modal para Edição 
+// Abrir modal para Edição
 async function abrirModalEdicao(id) {
     try {
         // Busca os dados atuais do produto na API
@@ -87,7 +87,8 @@ async function abrirModalEdicao(id) {
              document.getElementById("data_validade").value = "";
         }
 
-        const modal = document.getElementById("modalProduto");
+        // CORREÇÃO AQUI: O ID do modal estava errado
+        const modal = document.getElementById("modalProduto"); 
         modal.style.display = "block";
         modal.style.opacity = 1;
 
@@ -96,8 +97,9 @@ async function abrirModalEdicao(id) {
     }
 }
 
-// Excluir Produto 
+// Excluir Produto
 async function excluirProduto(id, nome) {
+    // Usamos um 'confirm' simples. Em um app real, usaríamos um modal customizado
     if (!confirm(`Tem certeza que deseja excluir o produto "${nome}"?`)) {
         return;
     }
@@ -117,6 +119,9 @@ async function excluirProduto(id, nome) {
         }
 
     } catch (error) {
+        // Exibe o erro de restrição de chave estrangeira
         alert("Erro ao excluir produto: " + error.message);
     }
 }
+
+

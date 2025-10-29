@@ -51,6 +51,74 @@
                         <th>Ações</th>
                     </tr>
                 </thead>
-                ```
+            <tbody>
+                    <% produtos.forEach(produto => { %>
+                        <tr>
+                            <td><%= produto.id %></td>
+                            <td><%= produto.nome %></td>
+                            <td><%= produto.descricao || 'N/A' %></td>
+                            <td><%= produto.estoque_minimo %></td>
+                            <td><%= produto.estoque_atual %></td>
+                            <td><%= produto.unidade_medida %></td>
+                            <td><%= produto.data_validade ? new Date(produto.data_validade).toLocaleDateString('pt-BR', {timeZone: 'UTC'}) : 'N/A' %></td>
+                            <td class="acoes">
+                                <!-- Botão de Editar -->
+                                <button class="btn btn-edit" onclick="abrirModalEdicao('<%= produto.id %>')">Editar</button>
+                                <!-- CORREÇÃO: A sintaxe do "onclick" estava errada. -->
+                                <button class="btn btn-danger" onclick="excluirProduto('<%= produto.id %>', '<%= produto.nome %>')">Excluir</button>
+                            </td>
+                        </tr>
+                    <% }); %>
+                </tbody>
+            </table>
+        </div>
+    </main>
 
-Faça essas substituições. Se os erros que você está vendo forem **diferentes** disso (por exemplo, mensagens de erro no terminal), por favor, **copie e cole a mensagem de erro completa** aqui para que eu possa analisar!
+    <div id="modalProduto" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="fecharModal()">&times;</span>
+            <h3 id="modalTitulo">Adicionar Novo Produto</h3>
+            
+            <form id="formProduto" action="/app/produtos/add" method="POST">
+                <input type="hidden" id="produtoId" name="id">
+                
+                <div class="form-grid">
+                    <div class="input-group">
+                        <label for="nome">Nome *</label>
+                        <input type="text" id="nome" name="nome" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="unidade_medida">Unidade Medida *</label>
+                        <input type="text" id="unidade_medida" name="unidade_medida" required placeholder="Ex: saco, lata, kg">
+                    </div>
+                    <div class="input-group">
+                        <label for="estoque_minimo">Estoque Mínimo *</label>
+                        <input type="number" id="estoque_minimo" name="estoque_minimo" min="0" required>
+                    </div>
+                    <div class="input-group">
+                        <label for="estoque_atual">Estoque Atual *</label>
+                        <input type="number" id="estoque_atual" name="estoque_atual" min="0" required>
+                    </div>
+                     <div class="input-group">
+                        <label for="data_validade">Data de Validade</label>
+                        <input type="date" id="data_validade" name="data_validade">
+                    </div>
+                    <div class="input-group span-2">
+                        <label for="descricao">Descrição</label>
+                        <textarea id="descricao" name="descricao" rows="3"></textarea>
+                    </div>
+                </div>
+
+                <small>* Campos obrigatórios</small>
+                <div class="modal-actions">
+                    <button type="button" class="btn" onclick="fecharModal()">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="/js/main.js"></script>
+</body>
+</html>
+

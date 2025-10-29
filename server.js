@@ -5,7 +5,7 @@ const mysql = require('mysql2');
 const path = require('path');
 
 const app = express();
-const port = 5500;
+const port = 3000;
 
 // Configuração da Conexão com o BD MySQL
 const db = mysql.createPool({

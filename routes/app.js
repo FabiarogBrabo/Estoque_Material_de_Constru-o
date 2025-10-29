@@ -65,14 +65,24 @@ module.exports = (db) => {
 
     // API: Obter dados de um produto (para edição)
     router.get('/api/produtos/:id', async (req, res) => {
+        const idBuscado = req.params.id;
+        console.log(`--- DEBUG: Recebido pedido para /api/produtos/${idBuscado} ---`);
+
         try {
-            const [rows] = await db.query('SELECT * FROM produtos WHERE id = ?', [req.params.id]);
+            const [rows] = await db.query('SELECT * FROM produtos WHERE id = ?', [idBuscado]);
+            
+            // LOG DE DEPURAÇÃO: O que o BD retornou?
+            console.log(`--- DEBUG: Resultado da busca no BD (rows):`, rows); 
+
             if (rows.length > 0) {
+                console.log(`--- DEBUG: Produto ENCONTRADO. Enviando JSON.`);
                 res.json(rows[0]);
             } else {
+                console.log(`--- DEBUG: Produto NÃO ENCONTRADO. Enviando 404.`);
                 res.status(404).json({ error: 'Produto não encontrado.' });
             }
         } catch (err) {
+            console.error(`--- DEBUG: ERRO NO CATCH:`, err);
             res.status(500).json({ error: 'Erro no servidor.' });
         }
     });
@@ -99,10 +109,19 @@ module.exports = (db) => {
     });
 
     // DELETE: Excluir produto 
-    router.delete('/api/produtos/:id', async (req, res) => {
+     router.delete('/api/produtos/:id', async (req, res) => {
         try {
-            await db.query('DELETE FROM produtos WHERE id = ?', [req.params.id]);
-            res.json({ success: true, message: 'Produto excluído.' });
+            // CORREÇÃO: Vamos verificar se a exclusão realmente aconteceu
+            const [result] = await db.query('DELETE FROM produtos WHERE id = ?', [req.params.id]);
+
+            if (result.affectedRows > 0) {
+                // Sucesso: O produto foi encontrado e excluído
+                res.json({ success: true, message: 'Produto excluído.' });
+            } else {
+                // Falha: Nenhum produto com esse ID foi encontrado
+                res.status(404).json({ success: false, error: 'Produto não encontrado para exclusão.' });
+            }
+
         } catch (err) {
             console.error(err);
             // Verifica erro de chave estrangeira (se houver movimentações)
