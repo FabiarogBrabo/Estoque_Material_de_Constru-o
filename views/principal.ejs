@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Principal</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body class="app-body">
+    <header class="app-header">
+        <h1>Almoxarifado</h1>
+        <div class="user-info">
+            <span>Olá, <%= usuario.nome %></span> <a href="/logout" class="btn btn-danger">Logout</a> </div>
+    </header>
+
+    <main class="container">
+        <h2>Painel de Controle</h2>
+        <p>Bem-vindo ao sistema de gerenciamento de materiais de construção.</p>
+        
+        <nav class="main-nav">
+            <a href="/app/produtos" class="nav-card"> <h3><i class="icon icon-product"></i> Cadastro de Produtos</h3>
+                <p>Gerencie (CRUD) os itens do catálogo.</p>
+            </a>
+            <a href="/app/estoque" class="nav-card"> <h3><i class="icon icon-stock"></i> Gestão de Estoque</h3>
+                <p>Registre entradas e saídas de materiais.</p>
+            </a>
+        </nav>
+    </main>
+</body>
+</html>
