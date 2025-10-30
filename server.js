@@ -7,7 +7,6 @@ const path = require('path');
 const app = express();
 const port = 3000;
 
-// --- MUDANÇA DO PLANO B ---
 // Vamos usar createConnection em vez de createPool para forçar uma nova ligação.
 const db = mysql.createConnection({
     host: 'localhost',
@@ -16,6 +15,7 @@ const db = mysql.createConnection({
     database: 'saep_db'
 }).promise();
 // --- FIM DA MUDANÇA ---
+
 
 // Middlewares
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -30,18 +30,22 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Configuração da Sessão
 app.use(session({
+
     secret: 'seu-segredo-aqui',
     resave: false,
     saveUninitialized: true,
     cookie: { secure: false }
+
 }));
 
 // Middleware de autenticação
 const checkAuth = (req, res, next) => {
     if (req.session.usuario) {
+
         next();
     } else {
         res.redirect('/');
+
     }
 };
 
@@ -49,12 +53,15 @@ const checkAuth = (req, res, next) => {
 const authRoutes = require('./routes/auth');
 const appRoutes = require('./routes/app');
 
+
 app.use('/', authRoutes(db));
 app.use('/app', checkAuth, appRoutes(db));
+
 
 app.get('/', (req, res) => {
     res.redirect('/login');
 });
+
 
 app.listen(port, () => {
     console.log(`Servidor rodando em http://localhost:${port}`);

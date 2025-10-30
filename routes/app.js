@@ -1,4 +1,6 @@
+
 console.log("--- VERSÃO MAIS RECENTE DO APP.JS CARREGADA COM SUCESSO ---");
+
 
 const express = require('express');
 const router = express.Router();

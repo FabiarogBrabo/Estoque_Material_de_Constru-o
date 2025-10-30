@@ -64,6 +64,7 @@ async function abrirModalEdicao(id) {
     try {
         // Busca os dados atuais do produto na API
         const response = await fetch(`/app/api/produtos/${id}`);
+
         if (!response.ok) {
             throw new Error('Produto não encontrado.');
         }
@@ -105,7 +106,9 @@ async function excluirProduto(id, nome) {
     }
 
     try {
+
         const response = await fetch(`/app/api/produtos/${id}`, {
+
             method: 'DELETE'
         });
 
